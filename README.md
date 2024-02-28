@@ -1,21 +1,61 @@
-## SpainSurveyAEAT
-Microdata manipulation &amp; Survey Analysis for Spain´s Housing Sector
+# SpainSurveyAEAT
 
-### Overview
-This repository includes scripts for preparing data and performing robust inference on the population from samples with multiple replications and sample weights. It showcases examples dealing with the analysisi of rental income in the Spanish housing sector.  This project tries to combine minimal dependencies and strong raw performance relying almost exclusively on libraries **data.table & survey** for all our analysis.
+## Overview
 
+**SpainSurveyAEAT** is a comprehensive toolkit designed for the analysis and manipulation of microdata related to Spain's housing sector. Utilizing the power of the `data.table` and `survey` libraries, this project aims to deliver robust inference capabilities on population samples, emphasizing rental income analysis.
 
-### Project structure
-- **main.R**: The main entrypoint is the file main.R on root folder. It reports some key statistics on the Spanish housing sector renterism using r package survey.
-- **merge_survey_files**: The folder includes pipes to prepare basic microdata files to work with main.R 
-- **tests**: this folder includes an example file explaining how to deal with sample and replication weights in the context of multiple imputation.
+## Getting Started
 
-### Sources and Scope
-This repository is prepared to work both with microdata from Encuesta Financiera de Familias (EFF) and the large IRPF sample recently made public by Instituto de Estudios Fiscales using data from AEAT.
-No microdata is provided for privacy reasons but both sources can be accessed for free after request to their respective provider:
- - EFF: https://app.bde.es/efs_www/home?lang=ES
- - IEF: https://www.ief.es/docs/investigacion/estadistica/PeticionDatos.pdf
+### Prerequisites
 
-### Reproductibility
-Once your access to microdata has been granted, if you find any issue reproducing any of these results please contact to: miguel.garcia.duch@ucm.es
+Ensure you have R installed on your system. This project relies heavily on the `data.table` and `systemfit` R packages for performance and analysis.
+
+### Installation
+
+Clone this repository to your local machine using:
+
+```bash
+git clone https://github.com/iliciuv/SpainSurveyAEAT.git
+```
+
+Navigate to the project directory and install the required R packages:
+
+```R
+install.packages(c("data.table", "survey"))
+```
+
+### Usage
+
+The main script can be run from the root folder:
+
+```R
+Rscript main.R
+```
+
+This script analyzes key statistics related to renterism in the Spanish housing sector, leveraging microdata from both the EFF and IEF datasets.
+
+## Project Structure
+
+- `main.R`: Entry point for the analysis.
+- `merge_survey_files/`: Contains pipelines for preparing microdata files.
+- `tests/`: Includes examples on handling sample and replication weights.
+
+## Data Sources
+
+This project is compatible with microdata from:
+- EFF (Encuesta Financiera de Familias): [EFF Data Access](https://app.bde.es/efs_www/home?lang=ES)
+- IEF (Instituto de Estudios Fiscales) [IEF Data Request](https://www.ief.es/docs/investigacion/estadistica/PeticionDatos.pdf)
+
+## Contributing
+
+Contributions to enhance **SpainSurveyAEAT** are welcome. If you experience any problem reproducing any results referencing this repository, please contact miguel.garcia.duch@ucm.es
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments
+
+- Data providers: EFF and IEF for their invaluable datasets.
+- All contributors who help in refining and advancing this analysis toolkit.
 
