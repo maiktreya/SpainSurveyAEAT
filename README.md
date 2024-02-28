@@ -2,7 +2,7 @@
 
 ## Overview
 
-**SpainSurveyAEAT** is a toolkit designed for the analysis and manipulation of microdata related to Spain's housing sector. Utilizing the power of the `data.table` and `survey` libraries, this project aims to deliver robust inference capabilities on population samples, emphasizing rental income analysis.
+**SpainSurveyAEAT** is a toolkit designed for the analysis and manipulation of microdata related to Spain's housing sector. Using exclusively `data.table` and `survey` libraries, this project aims to deliver robust inference capabilities on population samples, emphasizing rental income analysis.
 
 ## Getting Started
 
