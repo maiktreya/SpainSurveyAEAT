@@ -52,7 +52,7 @@ Contributions to enhance **SpainSurveyAEAT** are welcome. If you experience any 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the GNU General Public License v3.0. For more details, please visit [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ## Acknowledgments
 
