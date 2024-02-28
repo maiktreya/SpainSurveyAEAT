@@ -22,7 +22,6 @@ replicated_mean <- with(svy_rep_dt, svymean(~renthog19_eur20)) %>% MIcombine()
 
 # METHOD2 manual replication (survey)
 for (i in 1:5) {
-    dt[[i]] <- paste0("data/databol_2020_csv/databol", i, ".csv") %>% fread()
     pipe <- as.data.frame(dt[[i]])
     svy_dt[[i]] <- svydesign(ids = ~1, data = pipe, weights = pipe$facine3)
     manual_mean[[i]] <- svymean(~renthog19_eur20, svy_dt[[i]])
