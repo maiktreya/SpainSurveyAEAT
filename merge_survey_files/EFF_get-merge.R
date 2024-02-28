@@ -1,7 +1,6 @@
 # DATA ADQUISITION FROM ENCUESTA FINANCIERA DE FAMILIAS 2020 (@miguel-garcia-duch 22-02-2024rev)
 
 library(data.table)
-library(survey)
 rm(list = ls())
 
 dt <- list()
