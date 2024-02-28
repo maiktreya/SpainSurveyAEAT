@@ -2,7 +2,7 @@
 Microdata manipulation &amp; Survey Analysis for Spain´s Housing Sector
 
 ### Overview
-This repository includes scripts for preparing data and performing robust inference on the population from samples with multiple replications and sample weights. It showcases examples dealing with the analysisi of rental income in the Spanish housing sector.  This project tries to combine minimal dependencies and strong raw performance relying almost exclusively on libraries **data.table & systemfit** for all our analysis.
+This repository includes scripts for preparing data and performing robust inference on the population from samples with multiple replications and sample weights. It showcases examples dealing with the analysisi of rental income in the Spanish housing sector.  This project tries to combine minimal dependencies and strong raw performance relying almost exclusively on libraries **data.table & survey** for all our analysis.
 
 
 ### Project structure
