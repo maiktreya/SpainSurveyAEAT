@@ -36,7 +36,7 @@ if (ref_survey == "EFF") {
 }
 dt[, CASERO := 0][PAR150 > 0, CASERO := 1][, CASERO := factor(CASERO)]
 dt[, PROPIETARIO_SIN := 0][PATINMO > 0 & CASERO == 0, PROPIETARIO_SIN := 1][, PROPIETARIO_SIN := factor(PROPIETARIO_SIN)]
-dt[, INQUILINO := 1][ PROPIETARIO_SIN == 1, INQUILINO := 0][CASERO ==1, INQUILINO := 0][, INQUILINO := factor(INQUILINO)]
+dt[, INQUILINO := 1][PROPIETARIO_SIN == 1, INQUILINO := 0][CASERO == 1, INQUILINO := 0][, INQUILINO := factor(INQUILINO)]
 if (ref_survey == "EFF") dt[, INQUILINO := INQUILINO2] # categoria alternativa inquilino
 dt[, RENTAD_NOAL := 0][, RENTAD_NOAL := RENTAD - RENTA_ALQ]
 
@@ -96,12 +96,12 @@ PROPIETARIO_SIN_FREQ <- svytotal(~PROPIETARIO_SIN, design = dt_sv, subset = PROP
 
 # Create a data frame
 reg_tenencia <- data.frame(
-  Category = c("CASERO", "INQUILINO", "PROPIETARIO_SIN"),
-  Frequency = c(CASERO_FREQ, INQUILINO_FREQ, PROPIETARIO_SIN_FREQ)
+    Category = c("CASERO", "INQUILINO", "PROPIETARIO_SIN"),
+    Frequency = c(CASERO_FREQ, INQUILINO_FREQ, PROPIETARIO_SIN_FREQ)
 )
 
 reg_tenencia <- reg_tenencia %>%
-  dplyr::mutate(Percentage = (Frequency / sum(Frequency)) * 100)
+    dplyr::mutate(Percentage = (Frequency / sum(Frequency)) * 100)
 
 
 # Check output
