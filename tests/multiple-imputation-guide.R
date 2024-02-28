@@ -28,8 +28,7 @@ for (i in 1:5) {
 }
 
 # METHOD3 without replication
-dt_mean <- (dt[[1]] + dt[[2]] + dt[[3]] + dt[[4]] + dt[[5]]) / 5
-dt_mean <- as.data.frame(dt_mean)
+dt_mean <- ((dt[[1]] + dt[[2]] + dt[[3]] + dt[[4]] + dt[[5]]) / 5) %>% as.data.frame()
 svy_mean <- svydesign(ids = ~1, data = dt_mean, weights = dt_mean$facine3)
 standard_mean <- svymean(~renthog19_eur20, svy_mean)
 
