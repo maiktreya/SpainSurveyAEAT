@@ -6,7 +6,7 @@ rm(list = ls()) # clean enviroment to avoid ram bottlenecks
 sel_year <- 2021
 dt <- fread("data/ief2021/par150.gz")
 
-dt <- dt[, # group todas las declaraciones por persona
+dt <- dt[, # group todas las declaraciones por persona. PAR150: ded. por alq. de viv.)
     .(
         IDENHOG = mean(IDENHOG),
         PAR150 = sum(PAR150)
