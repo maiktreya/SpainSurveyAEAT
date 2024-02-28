@@ -36,7 +36,7 @@ if (ref_survey == "EFF") {
 }
 dt[, CASERO := 0][PAR150 > 0, CASERO := 1][, CASERO := factor(CASERO)]
 dt[, PROPIETARIO_SIN := 0][PATINMO > 0 & CASERO == 0, PROPIETARIO_SIN := 1][, PROPIETARIO_SIN := factor(PROPIETARIO_SIN)]
-dt[, INQUILINO := 0][CASERO == 0 | PROPIETARIO_SIN == 0, INQUILINO := 1][, INQUILINO := factor(INQUILINO)]
+dt[, INQUILINO := 1][ PROPIETARIO_SIN == 1, INQUILINO := 0][CASERO ==1, INQUILINO := 0][, INQUILINO := factor(INQUILINO)]
 if (ref_survey == "EFF") dt[, INQUILINO := INQUILINO2] # categoria alternativa inquilino
 dt[, RENTAD_NOAL := 0][, RENTAD_NOAL := RENTAD - RENTA_ALQ]
 
