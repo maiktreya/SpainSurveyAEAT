@@ -3,15 +3,15 @@
 library(magrittr)
 library(survey)
 library(data.table)
-rm(list = ls()) # clean enviroment to avoid ram bottlenecks
+rm(list = ls())
 
 # Parameters to set (Encuesta de referencia, periodo de estudio, unidad de estudi, columnas seleccionadaso)
 ref_survey <- "IEF" # either IEF or EFF
 sel_year <- 2021 # 2020 for EFF & 2021 for IEF
 ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
-selected_columns <- c("RENTAB", "RENTAD", "RENTA_ALQ", "PATINMO")
+selected_columns <- c("RENTAB", "RENTAD")
 
-# Import choosen dataframe (cambiar string inicial según ruta de los datos)
+# Import choosen dataframe (modify path if needed)
 dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
 
 # Use lapply with .SDcols to specify columns and replace NA with 0
@@ -30,8 +30,8 @@ dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
   ),
   by = .(reference = get(ref_unit))
 ]
-setnames(dt, "reference", as.character(ref_unit))
-dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$FACTORCAL) # muestra con coeficientes de elevación
+setnames(dt, "reference", as.character(ref_unit)) # identify base hierarchical level
+dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$FACTORCAL) # consider sample weigths
 
 
 # RESULTS----------------------------------
