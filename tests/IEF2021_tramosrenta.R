@@ -17,9 +17,10 @@ dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
 # Use lapply with .SDcols to specify columns and replace NA with 0
 dt[, (selected_columns) := lapply(.SD, function(x) ifelse(is.na(x), 0, x)), .SDcols = selected_columns]
 
-# Main data transformation TABLA[ filter_rows , select_columns  , group_by ]
+# Coerce non-response to numerical category for aggregation
 dt[TRAMO == "N", TRAMO := 8][, TRAMO := as.numeric(TRAMO)]
 
+# Main data transformation TABLA[ filter_rows , select_columns  , group_by ]
 dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
   .(
     RENTAB = sum(RENTAB),
