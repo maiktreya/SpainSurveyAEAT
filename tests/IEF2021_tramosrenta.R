@@ -5,7 +5,7 @@ library(survey)
 library(data.table)
 rm(list = ls())
 
-# Parameters to set (Encuesta de referencia, periodo de estudio, unidad de estudi, columnas seleccionadaso)
+# Parameters to set (reference survey, wave, base-unit, numerical variables)
 ref_survey <- "IEF" # either IEF or EFF
 sel_year <- 2021 # 2020 for EFF & 2021 for IEF
 ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
