@@ -1,4 +1,5 @@
-# Fichero principal 2020, select columns par150-caseros par36-renta
+# Muestra AEAT / IEF 2021 (income cohorts analysis)
+
 library(magrittr)
 library(survey)
 library(data.table)
