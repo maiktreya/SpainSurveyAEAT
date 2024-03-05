@@ -7,8 +7,8 @@ rm(list = ls()) # clean enviroment to avoid ram bottlenecks
 # Parameters to set (Encuesta de referencia, periodo de estudio, unidad de estudi, columnas seleccionadaso)
 ref_survey <- "IEF" # either IEF or EFF
 sel_year <- 2021 # 2020 for EFF & 2021 for IEF
-ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
-selected_columns <- c("RENTAD", "RENTA_ALQ", "PATINMO")
+ref_unit <- "IDENPER" # Use either IDENPER for personal or IDENHOG for household levels
+selected_columns <- c("RENTAB", "RENTAD", "RENTA_ALQ", "PATINMO")
 
 # Import choosen dataframe (cambiar string inicial según ruta de los datos)
 dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
@@ -21,6 +21,7 @@ dt[TRAMO == "N", TRAMO := 8][, TRAMO := as.numeric(TRAMO)]
 
 dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
   .(
+    RENTAB = sum(RENTAB),
     RENTAD = sum(RENTAD),
     TRAMO = mean(TRAMO),
     RENTA_ALQ = sum(RENTA_ALQ),
@@ -34,5 +35,15 @@ setnames(dt, "reference", as.character(ref_unit))
 dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$FACTORCAL) # muestra con coeficientes de elevación
 
 renta_tramo <- svyby(~RENTAD, ~ as.factor(TRAMO), dt_sv, svymean)
-
 print(renta_tramo)
+
+# PROBLEMA RENTA DISPONIBLE
+cortes_renta_disp <- dt[, TRAMO := as.factor(TRAMO)][, .(CORTES = min(RENTAD)), by = .(TRAMO)]
+print(cortes_renta_disp)
+
+# obs negativas en todos los tramos incluyendo 24 en el más rico (+1000 en el tramo 2)
+nrow(dt[TRAMO == 7 & RENTAD < 0, ]) %>% print()
+
+# RENTA BRUTA TAMBIÉN CON NEGATIVOS
+cortes_renta_bruta <- dt[, .(CORTES = min(RENTAB)), by = .(TRAMO)]
+print(cortes_renta_bruta)
