@@ -17,7 +17,7 @@ dt <- dt[, # group todas las declaraciones por persona. PAR150: ded. por alq. de
 dt_tipo <- fread(paste0("data/ief", sel_year, "/tipodec.gz")) # tipo de declaración already grouped by IDENPER
 dt <- merge(dt, dt_tipo, by = c("IDENPER", "IDENHOG"))
 
-dt_iden <- fread(paste0("data/ief", sel_year, "/iden.gz")) #  pesos muestrales
+dt_iden <- fread(paste0("data/ief", sel_year, "/iden2021newdt.gz")) #  pesos muestrales
 dt <- merge(dt, dt_iden, by = c("IDENPER", "IDENHOG"))
 
 dt_renta <- fread(paste0("data/ief", sel_year, "/renta.gz")) # renta y alquiler

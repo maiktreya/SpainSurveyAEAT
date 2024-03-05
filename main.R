@@ -18,9 +18,12 @@ dt[, (selected_columns) := lapply(.SD, function(x) ifelse(is.na(x), 0, x)), .SDc
 
 # Main data transformation TABLA[ filter_rows , select_columns  , group_by ]
 if (ref_survey == "IEF") {
+    dt[TRAMO == "N", TRAMO := 8][, TRAMO := as.numeric(TRAMO)]
+
     dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
         .(
             RENTAD = sum(RENTAD),
+            TRAMO = mean(TRAMO),
             RENTA_ALQ = sum(RENTA_ALQ),
             PAR150 = sum(PAR150),
             PATINMO = sum(PATINMO),
