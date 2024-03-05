@@ -5,8 +5,8 @@ library(data.table)
 rm(list = ls()) # clean enviroment to avoid ram bottlenecks
 
 # Parameters to set (Encuesta de referencia, periodo de estudio, unidad de estudi, columnas seleccionadaso)
-ref_survey <- "IEF" # either IEF or EFF
-sel_year <- 2021 # 2020 for EFF & 2021 for IEF
+ref_survey <- "EFF" # either IEF or EFF
+sel_year <- 2020 # 2020 for EFF & 2021 for IEF
 ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
 selected_columns <- c("RENTAD", "RENTA_ALQ", "PATINMO")
 
@@ -36,8 +36,10 @@ if (ref_survey == "IEF") {
 if (ref_survey == "EFF") {
     dt2 <- fread("data/eff2020databol.gz") # para importar valor de renta que coincida con EFF 2020 rev 2
     dt[, RENTAD := dt2$renthog19_eur20]
+    dt[, CASERO := 0][RENTA_ALQ > 0 & p2_1 != 1, CASERO := 1][, CASERO := factor(CASERO)]
+} else {
+   dt[, CASERO := 0][PAR150 > 0, CASERO := 1][, CASERO := factor(CASERO)]
 }
-dt[, CASERO := 0][PAR150 > 0, CASERO := 1][, CASERO := factor(CASERO)]
 dt[, PROPIETARIO_SIN := 0][PATINMO > 0 & CASERO == 0, PROPIETARIO_SIN := 1][, PROPIETARIO_SIN := factor(PROPIETARIO_SIN)]
 dt[, INQUILINO := 1][PROPIETARIO_SIN == 1, INQUILINO := 0][CASERO == 1, INQUILINO := 0][, INQUILINO := factor(INQUILINO)]
 if (ref_survey == "EFF") dt[, INQUILINO := INQUILINO2] # categoria alternativa inquilino
