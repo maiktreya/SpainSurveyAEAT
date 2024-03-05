@@ -7,7 +7,7 @@ rm(list = ls()) # clean enviroment to avoid ram bottlenecks
 # Parameters to set (Encuesta de referencia, periodo de estudio, unidad de estudi, columnas seleccionadaso)
 ref_survey <- "IEF" # either IEF or EFF
 sel_year <- 2021 # 2020 for EFF & 2021 for IEF
-ref_unit <- "IDENPER" # Use either IDENPER for personal or IDENHOG for household levels
+ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
 selected_columns <- c("RENTAB", "RENTAD", "RENTA_ALQ", "PATINMO")
 
 # Import choosen dataframe (cambiar string inicial según ruta de los datos)
