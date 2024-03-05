@@ -24,9 +24,6 @@ dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
     RENTAB = sum(RENTAB),
     RENTAD = sum(RENTAD),
     TRAMO = mean(TRAMO),
-    RENTA_ALQ = sum(RENTA_ALQ),
-    PAR150 = sum(PAR150),
-    PATINMO = sum(PATINMO),
     FACTORCAL = mean(FACTORCAL)
   ),
   by = .(reference = get(ref_unit))
