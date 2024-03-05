@@ -31,6 +31,8 @@ dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
 setnames(dt, "reference", as.character(ref_unit))
 dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$FACTORCAL) # muestra con coeficientes de elevación
 
+
+# RESULTS----------------------------------
 renta_tramo <- svyby(~RENTAD, ~ as.factor(TRAMO), dt_sv, svymean)
 print(renta_tramo)
 
