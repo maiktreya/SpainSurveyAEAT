@@ -34,15 +34,13 @@ dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$FACTORCAL) # muestra con co
 
 # RESULTS----------------------------------
 renta_tramo <- svyby(~RENTAD, ~ as.factor(TRAMO), dt_sv, svymean)
-print(renta_tramo)
+print(renta_tramo) # mean results seem realistic
 
-# PROBLEMA RENTA DISPONIBLE
 cortes_renta_disp <- dt[, TRAMO := as.factor(TRAMO)][, .(CORTES = min(RENTAD)), by = .(TRAMO)]
-print(cortes_renta_disp)
+print(cortes_renta_disp) # problematic min values
 
 # obs negativas en todos los tramos incluyendo 24 en el más rico (+1000 en el tramo 2)
 nrow(dt[TRAMO == 7 & RENTAD < 0, ]) %>% print()
 
-# RENTA BRUTA TAMBIÉN CON NEGATIVOS
 cortes_renta_bruta <- dt[, .(CORTES = min(RENTAB)), by = .(TRAMO)]
-print(cortes_renta_bruta)
+print(cortes_renta_bruta) # problematic min values
