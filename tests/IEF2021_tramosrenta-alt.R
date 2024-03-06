@@ -90,21 +90,6 @@ dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$FACTORCAL) # muestra con co
 ##########
 casero_dis <- svytable(~ TRAMO + CASERO, dt_sv) %>% as.data.frame() %>% print()
 
-#--------------@miguel compobar start--------------
-dt[, TRAMO_NEW := 0][RENTAB <= 0, TRAMO_NEW := 1][RENTAB > 0, TRAMO_NEW := 2]
-dt[RENTAB >= 6000, TRAMO_NEW := 3]
-dt[RENTAB >= 12000, TRAMO_NEW := 4]
-dt[RENTAB >= 22000, TRAMO_NEW := 5]
-dt[RENTAB >= 150000, TRAMO_NEW := 6]
-dt[RENTAB >= 300000, TRAMO_NEW := 7][, TRAMO_NEW := as.factor(TRAMO_NEW)]
-casero_dis_alt <- svytable(~ TRAMO_NEW + CASERO, dt_sv) %>% print()
-casero_dis_alt2 <- svyby(~ CASERO,   ~TRAMO_NEW, dt_sv, svymean) %>% print()
-#--------------@miguel compobar end--------------
-
-
-
-
-
 casero <- casero_dis %>%
     filter(CASERO == 1)
 
@@ -189,3 +174,15 @@ distribucion_tramos_panzer <- distribucion_tramos_panzer[order(distribucion_tram
 
 # Check output
 list(distribucion_TRAMO, distribucion_tramos_doc, distribucion_tramos_panzer) %>% print()
+
+
+#--------------@miguel compobar start--------------
+dt[, TRAMO_NEW := 0][RENTAB <= 0, TRAMO_NEW := 1][RENTAB > 0, TRAMO_NEW := 2]
+dt[RENTAB >= 6000, TRAMO_NEW := 3]
+dt[RENTAB >= 12000, TRAMO_NEW := 4]
+dt[RENTAB >= 22000, TRAMO_NEW := 5]
+dt[RENTAB >= 150000, TRAMO_NEW := 6]
+dt[RENTAB >= 300000, TRAMO_NEW := 7][, TRAMO_NEW := as.factor(TRAMO_NEW)]
+casero_dis_alt <- svytable(~ TRAMO_NEW + CASERO, dt_sv) %>% print()
+casero_dis_alt2 <- svyby(~ CASERO,   ~TRAMO_NEW, dt_sv, svymean) %>% print()
+#--------------@miguel compobar end--------------
