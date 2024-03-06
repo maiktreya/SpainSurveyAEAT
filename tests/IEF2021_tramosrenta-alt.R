@@ -183,13 +183,14 @@ dt[, TRAMO_NEW := 0][RENTAB <= 0, TRAMO_NEW := 1][RENTAB > 0, TRAMO_NEW := 2]
 dt[RENTAB > 6000, TRAMO_NEW := 3]
 dt[RENTAB > 12000, TRAMO_NEW := 4]
 dt[RENTAB > 22000, TRAMO_NEW := 5]
-dt[RENTAB > 150000, TRAMO_NEW := 6]
-dt[RENTAB > 300000, TRAMO_NEW := 7][, TRAMO_NEW := as.factor(TRAMO_NEW)]
+dt[RENTAB > 60000, TRAMO_NEW := 6]
+dt[RENTAB > 150000, TRAMO_NEW := 7]
+dt[RENTAB > 300000, TRAMO_NEW := 8][, TRAMO_NEW := as.factor(TRAMO_NEW)]
 casero_dis_alt <- svytable(~ TRAMO_NEW + CASERO, dt_sv) %>% print()
 casero_dis_alt2 <- svyby(~CASERO, ~TRAMO_NEW, dt_sv, svymean) %>% print()
 
 # low discrepance present for higher cohorts, equal lower ones
 # maybe because of "sin información"? why such category?
-data.table(as.numeric(casero_dis_alt[, 1]), as.numeric(distribucion_tramos_doc[1:7, 3])) %>% print()
-all.equal(as.numeric(casero_dis_alt[, 1]), as.numeric(distribucion_tramos_doc[1:7, 3])) %>% print()
+data.table(as.numeric(casero_dis_alt[, 1]), as.numeric(distribucion_tramos_doc[, 3])) %>% print()
+all.equal(as.numeric(casero_dis_alt[, 1]), as.numeric(distribucion_tramos_doc[, 3])) %>% print()
 #--------------@miguel compobar end--------------
