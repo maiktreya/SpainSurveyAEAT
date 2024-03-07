@@ -9,7 +9,7 @@ rm(list = ls())
 ref_survey <- "IEF" # either IEF or EFF
 sel_year <- 2021 # 2020 for EFF & 2021 for IEF
 ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
-selected_columns <- c("RENTAB", "RENTAD", "NEW_RENTA")
+selected_columns <- c("NEW_RENTA", "RENTAD")
 
 # Import choosen dataframe (modify path if needed)
 dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
@@ -23,8 +23,8 @@ dt[TRAMO == "N", TRAMO := 8][, TRAMO := as.numeric(TRAMO)]
 # Main data transformation TABLA[ filter_rows , select_columns  , group_by ]
 dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
   .(
-    RENTAB = sum(RENTAB),
-    RENTAD = sum(NEW_RENTA),
+    NEW_RENTA = sum(NEW_RENTA),
+    RENTAD = sum(RENTAD),
     TRAMO = mean(TRAMO),
     FACTORCAL = mean(FACTORCAL)
   ),
@@ -44,5 +44,5 @@ print(cortes_renta_disp) # problematic min values
 # obs negativas en todos los tramos incluyendo 24 en el más rico (+1000 en el tramo 2)
 nrow(dt[TRAMO == 7 & RENTAD < 0, ]) %>% print()
 
-cortes_renta_bruta <- dt[, .(CORTES = min(RENTAB)), by = .(TRAMO)]
+cortes_renta_bruta <- dt[, .(CORTES = min(NEW_RENTA)), by = .(TRAMO)]
 print(cortes_renta_bruta) # problematic min values
