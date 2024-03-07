@@ -9,7 +9,7 @@ rm(list = ls())
 ref_survey <- "IEF" # either IEF or EFF
 sel_year <- 2021 # 2020 for EFF & 2021 for IEF
 ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
-selected_columns <- c("RENTAB", "RENTAD")
+selected_columns <- c("RENTAB", "RENTAD", "NEW_RENTA")
 
 # Import choosen dataframe (modify path if needed)
 dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
@@ -24,7 +24,7 @@ dt[TRAMO == "N", TRAMO := 8][, TRAMO := as.numeric(TRAMO)]
 dt <- dt[TIPODEC %in% c("T1", "T21") & !is.na(FACTORCAL),
   .(
     RENTAB = sum(RENTAB),
-    RENTAD = sum(RENTAD),
+    RENTAD = sum(NEW_RENTA),
     TRAMO = mean(TRAMO),
     FACTORCAL = mean(FACTORCAL)
   ),
