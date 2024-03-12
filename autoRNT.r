@@ -2,21 +2,22 @@
 library(pdftools)
 library(data.table)
 library(magrittr)
-library(tesseract)
 library(stringr)
 
 rm(list = ls()) # clean env
+# (spa <- tesseract::tesseract("spa")) # spanish characters from pdf
 
 # define global vars
-(spa <- tesseract("spa")) # spanish characters from pdf
 table_fin <- data.table() # matrix objects
 pdf_pages <- listed_pdfs <- list() # nested lists
-pdf_length <- pdf_length("R/input/RNT_202402.pdf")
+file_path <- file.choose()
+pdf_length <- pdf_length(file_path)
 pdf_range <- seq(1, pdf_length, 49)
 
 # Split PDF into individual pages
 for (i in seq_along(pdf_range)) {
-    pdf_pages[[i]] <- pdf_subset("R/input/RNT_202402.pdf",
+
+    pdf_pages[[i]] <- pdf_subset(file_path,
         pages = pdf_range[i]:pdf_range[i + 1]
     )
     pdf_split(pdf_pages[[i]])
@@ -62,7 +63,8 @@ print(table_fin)
 # merge individual pdfs by NIF according to table_fin description
 for (i in seq_along(unique_nifs)) {
     listed_pdfs[[i]] <- table_fin[nif == unique_nifs[i], page]
-    pdf_subset("R/input/RNT_202402.pdf",
+
+    pdf_subset(file_path,
         pages = listed_pdfs[[i]],
         output = paste0("R/output/", unique_nifs[i], ".pdf")
     )
