@@ -5,14 +5,13 @@ library(magrittr)
 library(stringr)
 
 rm(list = ls()) # clean env
-# (spa <- tesseract::tesseract("spa")) # spanish characters from pdf
 
 # define global vars
 file_path <- tcltk::tk_choose.files() # interactive file selection
 table_fin <- data.table() # matrix objects
 pdf_pages <- listed_pdfs <- list() # nested lists
 pdf_length <- pdf_length(file_path) # number of pdf pages
-pdf_range <- seq(1, pdf_length, 49) # chunks of 50 to avoid memory crashes on large file
+pdf_range <- seq(1, pdf_length, 49) # chunks of 50 to avoid crashes
 
 # Split PDF into individual pages
 for (i in seq_along(pdf_range)) {
