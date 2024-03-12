@@ -15,7 +15,6 @@ pdf_range <- seq(1, pdf_length, 49) # chunks of 50 to avoid crashes
 
 # Split PDF into individual pages
 for (i in seq_along(pdf_range)) {
-
     pdf_pages[[i]] <- pdf_subset(file_path,
         pages = pdf_range[i]:pdf_range[i + 1]
     )
