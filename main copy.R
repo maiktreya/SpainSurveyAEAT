@@ -33,14 +33,16 @@ if (ref_survey == "IEF") {
     ]
     setnames(dt, "reference", as.character(ref_unit))
 }
-if( ref_survey == "ECV")
+if (ref_survey == "ECV") {
+    pending <- ""
+}
 if (ref_survey == "EFF") {
     dt2 <- fread("data/eff2020databol.gz") # para importar valor de renta que coincida con EFF 2020 rev 2
     dt[, RENTAD := dt2$renthog19_eur20]
     dt[, CASERO := 0][RENTA_ALQ > 0 & p2_1 != 1, CASERO := 1][, CASERO := factor(CASERO)]
 }
-if (ref_survey == "IEF>") { {
-   dt[, CASERO := 0][PAR150 > 0, CASERO := 1][, CASERO := factor(CASERO)]
+if (ref_survey == "IEF>") {
+    dt[, CASERO := 0][PAR150 > 0, CASERO := 1][, CASERO := factor(CASERO)]
 }
 dt[, PROPIETARIO_SIN := 0][PATINMO > 0 & CASERO == 0, PROPIETARIO_SIN := 1][, PROPIETARIO_SIN := factor(PROPIETARIO_SIN)]
 dt[, INQUILINO := 1][PROPIETARIO_SIN == 1, INQUILINO := 0][CASERO == 1, INQUILINO := 0][, INQUILINO := factor(INQUILINO)]
