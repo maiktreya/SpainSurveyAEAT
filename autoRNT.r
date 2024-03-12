@@ -4,12 +4,13 @@ library(data.table)
 library(magrittr)
 library(tesseract)
 library(stringr)
+
 rm(list = ls()) # clean env
 
 # define global vars
-(spa <- tesseract("spa"))
-table_fin <- data.table()
-pdf_pages <- listed_pdfs <- list()
+(spa <- tesseract("spa")) # spanish characters from pdf
+table_fin <- data.table() # matrix objects
+pdf_pages <- listed_pdfs <- list() # nested lists
 pdf_length <- pdf_length("R/input/RNT_202402.pdf")
 pdf_range <- seq(1, pdf_length, 49)
 
@@ -21,10 +22,13 @@ for (i in seq_along(pdf_range)) {
     pdf_split(pdf_pages[[i]])
 }
 
+# list created individual pdf files
+pdf_files <- list.files(pattern = "$.pdf")
+
 # Loop through each page
 for (i in seq_along(pdf_length)) {
     # Extract text from current page
-    text <- pdf_data(pdf_pages[[i]]) %>% as.data.table()
+    text <- pdf_data(pdf_files[i]) %>% as.data.table()
     text[, index := .I]
 
     # Find the row numbers of the delimiters
@@ -32,14 +36,15 @@ for (i in seq_along(pdf_length)) {
     delim2 <- text[text == "empresario", index]
 
     # Extract the required information
-    if (!is.na(delim1) & !is.na(delim2)) {
+    if (!is.na(delim1) && !is.na(delim2)) {
         cuenta_cot <- text[index == delim1 + 1]$text
         nif <- text[index == delim2 + 2]$text
 
         # Add the extracted information to table_fin
         row_to_add <- data.table(
             page = i,
-            cuenta_cot = cuenta_cot, nif = nif
+            cuenta_cot = cuenta_cot,
+            nif = nif
         )
         table_fin <- rbind(table_fin, row_to_add)
     }
