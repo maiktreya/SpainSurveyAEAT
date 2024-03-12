@@ -48,5 +48,15 @@ percentile_2_ccaa_tabla <- cbind(percentile_2_ccaa_tabla, Region = c(
 
 ## is HH040G anual?
 
-           ecv[HY040G >= percentile_2_ccaa, status := "CASERO"][HH021 == 1 | HH021 == 2, status := "PROPIETARIO"][,][HH021 == 3 , status := "INQUILINO" ]
-           ecv[status %in% c("CASERO", "PROPIETARIO", "INQUILINO") , STATUS := "RESTO"]
+
+
+for (i in unique(ecv$DB040)) {
+  ecv[DB040 == i & HY040G >= percentile_2_ccaa_tabla[DB040 == i, HH060], status := "CASERO"]
+  ecv[HH021 == 1 | HH021 == 2, status := "PROPIETARIO"]
+  ecv[HH021 == 3, status := "INQUILINO"]
+  ecv[status %in% c("CASERO", "PROPIETARIO", "INQUILINO"), STATUS := "RESTO"]
+}
+
+ecv_sv <- svydesign(ids = ~1, data = ecv, weights = ecv$DB090)
+
+svytable(~status, ecv_sv) %>% print()
