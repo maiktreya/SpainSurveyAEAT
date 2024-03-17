@@ -1,4 +1,4 @@
-# Load necessary libraries magrittr and data.table
+# Load necessary libraries magrittr and data.table before sourcing!s
 
 # Function to create specified directories if they do not already exist
 create_directories <- function(trans_dir, ind_dir, out_dir) {
@@ -73,7 +73,8 @@ merge_pdfs_by_nif <- function(table_fin, file_path, out_dir) {
 
     # Merge pages into a single PDF for the current NIF
     pdftools::pdf_subset(file_path,
-                         pages = listed_pdfs,
-                         output = paste0(out_dir, "/", unique_nifs[i], ".pdf"))
+      pages = listed_pdfs,
+      output = paste0(out_dir, "/", unique_nifs[i], ".pdf")
+    )
   }
 }
