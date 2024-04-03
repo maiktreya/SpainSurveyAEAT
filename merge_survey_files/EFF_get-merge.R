@@ -1,4 +1,4 @@
-# DATA ADQUISITION FROM ENCUESTA FINANCIERA DE FAMILIAS 2020 (@miguel-garcia-duch 22-02-2024rev)
+# DATA ADQUISITION FROM ENCUESTA FINANCIERA DE FAMILIAS 2011 (@miguel-garcia-duch 22-02-2024rev)
 
 library(data.table)
 rm(list = ls())
@@ -6,9 +6,9 @@ rm(list = ls())
 dt <- list()
 
 for (i in 1:5) {
-    dt[[i]] <- fread(paste0("data/otras2020/otras_secciones_2020_imp", i, ".csv"))
+    dt[[i]] <- fread(paste0("data/otras2011/otras_secciones_2011_imp", i, ".csv"))
     dt[[i]][, IDENPER := .I]
-    dt[[i]][, IDENHOG := h_2020][, h_2020 := NULL]
+    dt[[i]][, IDENHOG := h_2011][, h_2011 := NULL]
     dt[is.na(dt)] <- 0
 
     # HAS OTHER PROPERTIES (2_42) + IS HOUSING (2_43) + GENERATES RENTS(2_43)
@@ -41,4 +41,4 @@ dt[, PATINMO := PROPIETAR]
 dt[, FACTORCAL := facine3]
 dt[, RENTAD := renthog] # renta bruta !!
 
-fwrite(dt, "data/EFF-2020-new.gz")
+fwrite(dt, "data/EFF-2011-new.gz")
