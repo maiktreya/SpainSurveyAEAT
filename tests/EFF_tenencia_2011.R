@@ -7,8 +7,6 @@ rm(list = ls()) # clean enviroment to avoid ram bottlenecks
 # Parameters to set (Encuesta de referencia, periodo de estudio, unidad de estudi, columnas seleccionadaso)
 ref_survey <- "EFF" # either IEF or EFF
 sel_year <- 2011 # 2020 for EFF & 2021 for IEF
-ref_unit <- "IDENHOG" # Use either IDENPER for personal or IDENHOG for household levels
-selected_columns <- c("RENTAD", "RENTA_ALQ", "PATINMO")
 
 # Import choosen dataframe (cambiar string inicial según ruta de los datos)
 dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
@@ -16,4 +14,8 @@ dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
 ## Prepare survey object from dt and set income cuts for quantiles dynamically
 dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$facine3) # muestra con coeficientes de elevación
 
-tenencia <- svytable(~p2_1, dt_sv)
+# get tenure status
+tenencia <- svytable(~p2_1, dt_sv) %>% prop.table()
+
+# present as proportions
+tenencia %>% print()
