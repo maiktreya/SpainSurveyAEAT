@@ -15,7 +15,7 @@ dt <- paste0("data/", ref_survey, "-", sel_year, "-new.gz") %>% fread()
 dt_sv <- svydesign(ids = ~1, data = dt, weights = dt$facine3)
 
 # get tenure status
-tenencia <- svytable(~p2_1, dt_sv) %>% prop.table()
+tenencia <- svytable(~p2_1, subset(dt_sv, p1_2b_1 > 1985)) %>% prop.table()
 
 # present as proportions
 tenencia %>% print()
