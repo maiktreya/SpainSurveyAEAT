@@ -180,6 +180,7 @@ colnames(renta_mediana2)[colnames(renta_mediana2) == "RENTAB_NOAL"] <- "RENTAB"
 
 renta_mediana <- rbind(renta_mediana, renta_mediana2)
 renta_mediana <- renta_mediana[order(-renta_mediana$RENTAB), ]
+
 #############
 median_renta_inquili <- svyquantile(~RENTAB, subset(dt_sv, INQUILINO == 1), quantiles = .5, ci = FALSE)$RENTAB[1]
 median_renta_caseros <- svyquantile(~RENTAB, subset(dt_sv, CASERO == 1), quantiles = .5, ci = FALSE)$RENTAB[1]
